@@ -2,7 +2,7 @@ plugins {
     id(Plugins.androidApplication)
     kotlin(KotlinPlugins.android)
     kotlin(KotlinPlugins.kapt)
-    id(Plugins.hilt).apply(false)
+    id(Plugins.hilt).apply(true)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
 }
 
@@ -34,6 +34,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Compose.composeVersion
     }
+
 }
 
 dependencies {
