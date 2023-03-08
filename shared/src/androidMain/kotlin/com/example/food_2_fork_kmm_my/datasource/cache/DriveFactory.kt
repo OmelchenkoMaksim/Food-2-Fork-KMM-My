@@ -13,6 +13,5 @@ actual class DriverFactory(
             context = context,
             name = "recipes.db" // имя базы данных больше нигде не объявляется (вроде)
         )
-
     }
 }
