@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.food_2_fork_kmm_my">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".android.BaseApplication"
         android:allowBackup="false"

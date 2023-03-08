@@ -60,6 +60,7 @@ dependencies {
     kapt(Hilt.hiltCompiler)
 
     implementation(Kotlinx.datetime)
+    implementation(Ktor.android)
 
     debugImplementation(SquareUp.leakCanary)
 }
