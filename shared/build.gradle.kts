@@ -73,11 +73,11 @@ kotlin {
     }
 }
 
-//sqldelight{
-//
-//    database("RecipeDatabase") // create the Database name
-//    {
-//        packageName = "com.example.food_2_fork_kmm_my.datasource.cache"
-//        sourceFolders = listOf("sqldelight")
-//    }
-//}
+sqldelight{
+
+    database("RecipeDatabase") // create the Database name
+    {
+        packageName = "com.example.food_2_fork_kmm_my.datasource.cache"
+        sourceFolders = listOf("sqldelight")
+    }
+}
