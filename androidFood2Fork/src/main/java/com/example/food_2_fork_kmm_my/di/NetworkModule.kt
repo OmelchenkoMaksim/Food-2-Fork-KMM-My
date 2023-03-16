@@ -12,20 +12,22 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object NetworkModule{
 
-    @Provides
     @Singleton
-    fun provideHttpClient():HttpClient{
+    @Provides
+    fun provideHttpClient(): HttpClient{
         return KtorClientFactory().build()
     }
 
     @Singleton
     @Provides
-    fun provideRecipeService(httpClient:HttpClient): RecipeService {
+    fun provideRecipeService(
+        httpClient: HttpClient,
+    ): RecipeService {
         return RecipeServiceImpl(
             httpClient = httpClient,
-            baseUrl = RecipeServiceImpl.BASE_URL
+            baseUrl = RecipeServiceImpl.BASE_URL,
         )
     }
 }

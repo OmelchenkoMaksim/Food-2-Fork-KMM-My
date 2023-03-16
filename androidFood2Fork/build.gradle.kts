@@ -2,7 +2,7 @@ plugins {
     id(Plugins.androidApplication)
     kotlin(KotlinPlugins.android)
     kotlin(KotlinPlugins.kapt)
-    id(Plugins.hilt).apply(true)
+    id(Plugins.hilt)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
 }
 

@@ -2,11 +2,11 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-	let greet = Greeting().greet()
+    let greet = Greeting().greeting()
 
-	var body: some View {
-		Text(greet)
-	}
+    var body: some View {
+        Text(greet)
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {

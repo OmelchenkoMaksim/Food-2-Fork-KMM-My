@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Food-2-Fork-KMM-My"
+rootProject.name = "food_2_fork_kmm_my"
 include(":androidFood2Fork")
 include(":shared")

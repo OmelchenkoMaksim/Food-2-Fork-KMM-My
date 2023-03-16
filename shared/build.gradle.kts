@@ -56,6 +56,7 @@ kotlin {
                 implementation(Kotlinx.datetime)
                 implementation(Ktor.core)
                 implementation(Ktor.clientSerialization)
+                implementation(SQLDelight.runtime)
             }
         }
         val androidMain by getting {
