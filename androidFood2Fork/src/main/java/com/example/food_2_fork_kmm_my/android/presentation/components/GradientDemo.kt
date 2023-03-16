@@ -1,0 +1,35 @@
+package com.example.food_2_fork_kmm_my.android.presentation.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush.Companion.linearGradient
+import androidx.compose.ui.graphics.Color
+
+@Composable
+fun GradientDemo() {
+    val colors = listOf(
+        // эти три цвета показывают переход от 9 к 3 и обратно к 9 - так строется градиент
+        Color.LightGray.copy(alpha  =.9f),
+        Color.LightGray.copy(alpha = .3f),
+        Color.LightGray.copy(alpha = .9f),
+    )
+    val brush = linearGradient(
+        colors,
+//        координаты показывают где начинается градиент и где кончается
+        start = Offset(200f, 200f),
+        end = Offset(400f, 400f)
+    )
+    Surface(shape = MaterialTheme.shapes.small) {
+        Spacer(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(brush = brush)
+        )
+    }
+}

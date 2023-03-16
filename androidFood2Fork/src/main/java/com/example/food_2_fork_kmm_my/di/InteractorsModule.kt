@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import com.example.food_2_fork_kmm_my.datasource.cache.RecipeCache
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -16,16 +17,20 @@ object InteractorsModule {
     @Singleton
     @Provides
     fun provideSearchRecipes(
-        recipeService: RecipeService
+        recipeService: RecipeService,
+        recipeCache: RecipeCache
     ): SearchRecipes {
-        return SearchRecipes(recipeService = recipeService)
+        return SearchRecipes(
+            recipeService = recipeService,
+            recipeCache = recipeCache
+        )
     }
 
     @Singleton
     @Provides
     fun provideGetRecipe(
         recipeService: RecipeService
-    ): GetRecipe  {
+    ): GetRecipe {
         return GetRecipe(recipeService = recipeService)
     }
 }

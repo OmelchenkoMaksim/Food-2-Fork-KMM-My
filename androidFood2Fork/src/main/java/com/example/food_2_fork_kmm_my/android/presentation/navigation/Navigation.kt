@@ -1,6 +1,8 @@
 package com.example.food_2_fork_kmm_my.android.presentation.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -11,6 +13,10 @@ import com.example.food_2_fork_kmm_my.android.presentation.recipe_detail.RecipeD
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListScreen
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListViewModel
 
+@OptIn(
+    ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalStdlibApi::class
+)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -20,9 +26,23 @@ fun Navigation() {
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
             RecipeListScreen(
+                state = viewModel.state.value,
+                // вот эта строка
+                onTriggerEvent = viewModel::onTriggerEvent,
+//                в точности тоже самое что и вот эта конструкция
+                /*   onTriggerEvent = { events -> // RecipeListEvents
+                       viewModel.onTriggerEvent(events)
+                   },*/
+
+
                 onSelectRecipe = { recipeId ->
-                    navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
+                    navController.navigate(
+                        route = "${Screen.RecipeDetail.route}/$recipeId"
+                    )
                 }
+/*                onSelectRecipe = { recipeId ->
+                    navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
+                }*/
             )
         }
         composable(
