@@ -11,11 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.food_2_fork_kmm_my.android.presentation.components.RecipeImage
 import com.example.food_2_fork_kmm_my.domain.model.Recipe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-const val RECIPE_IMAGE_HEIGHT = 260
-
-@ExperimentalCoroutinesApi
 @Composable
 fun RecipeCard(
     recipe: Recipe,
@@ -62,3 +58,11 @@ fun RecipeCard(
         }
     }
 }
+
+
+
+
+
+
+
+

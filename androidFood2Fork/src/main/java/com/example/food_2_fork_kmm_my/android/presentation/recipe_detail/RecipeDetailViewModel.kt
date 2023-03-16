@@ -10,41 +10,36 @@ import com.example.food_2_fork_kmm_my.interactors.recipe_detail.GetRecipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalStdlibApi::class)
+@ExperimentalStdlibApi
 @HiltViewModel
 class RecipeDetailViewModel
 @Inject
 constructor(
     private val savedStateHandle: SavedStateHandle,
-//    private val recipeService: RecipeService
-    private val getRecipe: GetRecipe
-) : ViewModel() {
+    private val getRecipe: GetRecipe,
+): ViewModel() {
 
     val recipe: MutableState<Recipe?> = mutableStateOf(null)
 
     init {
-
         savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            viewModelScope.launch {
-getRecipe(recipeId = recipeId)
-            }
-
+            getRecipe(recipeId = recipeId)
         }
     }
 
-    private fun getRecipe(recipeId: Int) {
-
+    private fun getRecipe(recipeId: Int){
         getRecipe.execute(recipeId = recipeId).onEach { dataState ->
-            println("Recipe Detail View Model loading: ${dataState.isLoading}")
+            println("RecipeDetailVM: loading: ${dataState.isLoading}")
+
             dataState.data?.let { recipe ->
-                println("Recipe Detail View Model : ${recipe}")
-                this.recipe.value=recipe
+                println("RecipeDetailVM: recipe: ${recipe}")
+                this.recipe.value = recipe
             }
+
             dataState.message?.let { message ->
-                println("Recipe Detail View Model mes : ${message}")
+                println("RecipeDetailVM: error: ${message}")
             }
         }.launchIn(viewModelScope)
     }

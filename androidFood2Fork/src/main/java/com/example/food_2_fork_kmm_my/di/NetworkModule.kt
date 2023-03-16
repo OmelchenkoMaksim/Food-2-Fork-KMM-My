@@ -1,12 +1,12 @@
-package com.example.food_2_fork_kmm_my.di
+package com.example.food_2_fork_kmm_my.android.di
 
 import com.example.food_2_fork_kmm_my.datasource.network.KtorClientFactory
+import com.example.food_2_fork_kmm_my.datasource.network.RecipeService
+import com.example.food_2_fork_kmm_my.datasource.network.RecipeServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import com.example.food_2_fork_kmm_my.datasource.network.RecipeServiceImpl
-import com.example.food_2_fork_kmm_my.datasource.network.RecipeService
 import io.ktor.client.*
 import javax.inject.Singleton
 

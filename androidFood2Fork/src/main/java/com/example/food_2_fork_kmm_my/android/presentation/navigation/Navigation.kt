@@ -13,12 +13,11 @@ import com.example.food_2_fork_kmm_my.android.presentation.recipe_detail.RecipeD
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListScreen
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListViewModel
 
-@OptIn(
-    ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class,
-    ExperimentalStdlibApi::class
-)
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
+@ExperimentalStdlibApi
 @Composable
-fun Navigation() {
+fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
@@ -27,22 +26,10 @@ fun Navigation() {
             val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
             RecipeListScreen(
                 state = viewModel.state.value,
-                // вот эта строка
                 onTriggerEvent = viewModel::onTriggerEvent,
-//                в точности тоже самое что и вот эта конструкция
-                /*   onTriggerEvent = { events -> // RecipeListEvents
-                       viewModel.onTriggerEvent(events)
-                   },*/
-
-
                 onSelectRecipe = { recipeId ->
-                    navController.navigate(
-                        route = "${Screen.RecipeDetail.route}/$recipeId"
-                    )
-                }
-/*                onSelectRecipe = { recipeId ->
                     navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
-                }*/
+                }
             )
         }
         composable(

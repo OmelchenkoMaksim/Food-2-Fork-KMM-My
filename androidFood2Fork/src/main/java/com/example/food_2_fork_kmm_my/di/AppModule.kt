@@ -1,4 +1,4 @@
-package com.example.food_2_fork_kmm_my.di
+package com.example.food_2_fork_kmm_my.android.di
 
 import android.content.Context
 import com.example.food_2_fork_kmm_my.android.BaseApplication
@@ -20,3 +20,10 @@ object AppModule {
     }
 
 }
+
+
+
+
+
+
+

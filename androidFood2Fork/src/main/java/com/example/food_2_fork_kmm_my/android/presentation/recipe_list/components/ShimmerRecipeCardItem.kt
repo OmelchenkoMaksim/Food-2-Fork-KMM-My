@@ -7,7 +7,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Brush.Companion.linearGradient
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -17,22 +17,19 @@ fun ShimmerRecipeCardItem(
     colors: List<Color>,
     xShimmer: Float,
     yShimmer: Float,
-    cardHeight:Dp,
-    gradientWidth:Float,
-    padding:Dp
+    cardHeight: Dp,
+    gradientWidth: Float,
+    padding: Dp
 ) {
-
-    val brush = Brush.linearGradient(
+    val brush = linearGradient(
         colors,
-//        координаты показывают где начинается градиент и где кончается
         start = Offset(xShimmer - gradientWidth, yShimmer - gradientWidth),
         end = Offset(xShimmer, yShimmer)
     )
-
-    Column(
-        modifier = Modifier.padding(padding)
-    ){
-        Surface(shape = MaterialTheme.shapes.small) {
+    Column(modifier = Modifier.padding(padding)) {
+        Surface(
+            shape = MaterialTheme.shapes.small,
+        ) {
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -40,19 +37,19 @@ fun ShimmerRecipeCardItem(
                     .background(brush = brush)
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        // ну тут как бы следующий элемент походу описывается
-        Surface(shape = MaterialTheme.shapes.small) {
+        Spacer(modifier = Modifier.height(8.dp))
+        Surface(
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+        ) {
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(cardHeight/10 )
+                    .height(cardHeight / 10)
                     .background(brush = brush)
             )
         }
     }
 
 }
-
-
-

@@ -1,4 +1,4 @@
-package com.example.food_2_fork_kmm_my.di
+package com.example.food_2_fork_kmm_my.android.di
 
 import com.example.food_2_fork_kmm_my.datasource.cache.RecipeCache
 import com.example.food_2_fork_kmm_my.datasource.network.RecipeService
@@ -19,7 +19,7 @@ object InteractorsModule {
     fun provideSearchRecipes(
         recipeService: RecipeService,
         recipeCache: RecipeCache,
-    ): SearchRecipes {
+    ): SearchRecipes{
         return SearchRecipes(
             recipeService = recipeService,
             recipeCache = recipeCache

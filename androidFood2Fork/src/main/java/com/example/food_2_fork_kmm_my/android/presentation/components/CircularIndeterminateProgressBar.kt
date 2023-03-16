@@ -1,3 +1,4 @@
+
 package com.example.food_2_fork_kmm_my.android.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,18 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
 
-
 /**
- * Center a circular indeterminate progress bar with optional vertical bias
+ * Center a circular indeterminate progress bar with optional vertical bias.
+ *
+ * NOTE: You do not need a ConstraintLayout here. A Row would have been perfectly fine.
+ * I just left it here as an example.
  */
 @Composable
-fun CircularIndeterminateProgressBar(
-    isDisplayed: Boolean,
-    verticalBias: Float
-) {
+fun CircularIndeterminateProgressBar(isDisplayed: Boolean, verticalBias: Float) {
     if (isDisplayed) {
         ConstraintLayout(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             val (progressBar) = createRefs()
             val topBias = createGuidelineFromTop(verticalBias)

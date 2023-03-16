@@ -6,11 +6,11 @@ import com.example.food_2_fork_kmm_my.domain.model.Recipe
 import com.example.food_2_fork_kmm_my.domain.util.DatetimeUtil
 
 class RecipeCacheImpl(
-    private val recipeDatabase: RecipeDatabase,
-    private val datetimeUtil: DatetimeUtil
-) : RecipeCache {
+    val recipeDatabase: RecipeDatabase,
+    private val datetimeUtil: DatetimeUtil,
+): RecipeCache {
 
-    private val queries: RecipeDbQueries = recipeDatabase.recipeDbQueries
+    private var queries: RecipeDbQueries = recipeDatabase.recipeDbQueries
 
     override fun insert(recipe: Recipe) {
         queries.insertRecipe(
@@ -20,15 +20,14 @@ class RecipeCacheImpl(
             featured_image = recipe.featuredImage,
             rating = recipe.rating.toLong(),
             source_url = recipe.sourceUrl,
-            // SQLDelight can't hold List inside
-            ingredients = recipe.ingredients.convertIngredientListToString(), // TODO("convert String to List<String>")
+            ingredients = recipe.ingredients.convertIngredientListToString(),
             date_updated = datetimeUtil.toEpochMilliseconds(recipe.dateUpdated),
-            date_added = datetimeUtil.toEpochMilliseconds(recipe.dateAdded)
+            date_added = datetimeUtil.toEpochMilliseconds(recipe.dateAdded),
         )
     }
 
     override fun insert(recipes: List<Recipe>) {
-        for (recipe in recipes) {
+        for(recipe in recipes){
             insert(recipe)
         }
     }
@@ -38,23 +37,22 @@ class RecipeCacheImpl(
             query = query,
             pageSize = RECIPE_PAGINATION_PAGE_SIZE.toLong(),
             offset = ((page - 1) * RECIPE_PAGINATION_PAGE_SIZE).toLong()
-        ).executeAsList().toRecipeList() // TODO convert List<Recipe_Entity> to List<Recipe>
+        ).executeAsList().toRecipeList()
     }
 
     override fun getAll(page: Int): List<Recipe> {
         return queries.getAllRecipes(
             pageSize = RECIPE_PAGINATION_PAGE_SIZE.toLong(),
             offset = ((page - 1) * RECIPE_PAGINATION_PAGE_SIZE).toLong()
-        ).executeAsList().toRecipeList() // TODO convert List<Recipe_Entity> to List<Recipe>
+        ).executeAsList().toRecipeList()
     }
 
     override fun get(recipeId: Int): Recipe? {
         return try {
-            queries.getRecipeById(id = recipeId.toLong())
-                .executeAsOne().toRecipe() // TODO convert <Recipe_Entity> to <Recipe>
-        } catch (
-            e: NullPointerException
-        ) {
+            queries
+                .getRecipeById(id = recipeId.toLong())
+                .executeAsOne().toRecipe()
+        }catch (e: NullPointerException){
             null
         }
     }

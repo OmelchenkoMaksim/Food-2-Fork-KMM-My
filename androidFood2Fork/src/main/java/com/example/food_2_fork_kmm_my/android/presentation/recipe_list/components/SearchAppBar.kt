@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -23,13 +22,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SearchAppBar(
     query: String,
-    // how we change
     onQueryChanged: (String) -> Unit,
     onExecuteSearch: () -> Unit,
 ) {
-    // с помощью этого контроллера можно прятать клаву
     val keyboardController = LocalSoftwareKeyboardController.current
-
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
@@ -44,50 +40,33 @@ fun SearchAppBar(
                 TextField(
                     modifier = Modifier
                         .fillMaxWidth(.9f)
-                        .padding(8.dp),
+                        .padding(8.dp)
+                    ,
                     value = query,
                     onValueChange = { onQueryChanged(it) },
-                    label = { Text(text = "Search") }, // if nothing input show Search
-
-                    // что-то вроде настроек клавиатуры
+                    label = { Text(text = "Search") },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
-                        // что-то вроде нажатия завершающего интер
                         imeAction = ImeAction.Done,
                     ),
-                    // что-то вроде отбивки от клавы при действиях пользака
                     keyboardActions = KeyboardActions(
-                        // что происходит при нажатии кнопки Done (Enter)
                         onDone = {
                             onExecuteSearch()
-                            keyboardController?.hide() // прячем клаву
+                            keyboardController?.hide()
                         },
                     ),
-                    // третий атрибут это иконка в начале текстового поля поиска
-                    leadingIcon = {
-                        // в Compose мы обращаемся к банку иконок и берем оттуда: поиск иконка
-                        Icon(
-                            Icons.Filled.Search,
-                            contentDescription = "Search Icon" // для слабовидящих озвучка
-                        )
-                    },
-                    // цвет
-                    textStyle = TextStyle(
-                        // цвет текста черный (что на поверхности)
-                        color = MaterialTheme.colors.onSurface
-                    ),
-                    colors = TextFieldDefaults.textFieldColors(
-                        // цвет поля - белый (поверхность)
-                        backgroundColor = MaterialTheme.colors.surface
-                    ),
+                    leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search Icon") },
+                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                    colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface),
                 )
-            }
-            LazyRow(
-                modifier = Modifier
-                    .padding(start = 8.dp, bottom = 8.dp),
-            ) {
             }
         }
     }
 }
+
+
+
+
+
+
 

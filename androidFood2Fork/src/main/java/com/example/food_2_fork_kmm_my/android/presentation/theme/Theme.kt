@@ -2,11 +2,8 @@ package com.example.food_2_fork_kmm_my.android.presentation.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -33,72 +30,20 @@ private val LightThemeColors = lightColors(
 @Composable
 fun AppTheme(
     displayProgressBar: Boolean,
-//  dialogQueue: Queue<GenericMessageInfo> = Queue(mutableListOf()),
-//  onRemoveHeadMessageFromQueue: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
         colors = LightThemeColors,
         typography = QuickSandTypography,
         shapes = AppShapes
-    ) {
+    ){
         Box(
             modifier = Modifier
-              .fillMaxSize()
-              .background(color = Grey1)
-        ) {
-            // For android we can process the DialogQueue at the Application level
-            // on iOS you cannot do this because SwiftUI preloads the views in a List
-//      ProcessDialogQueue(
-//        dialogQueue = dialogQueue,
-//        onRemoveHeadMessageFromQueue = onRemoveHeadMessageFromQueue,
-//      )
-
-                content()
-
-            // 0.3f что то вроде на 30 процентов от верха экрана
-      CircularIndeterminateProgressBar(isDisplayed = displayProgressBar, 0.3f)
+                .fillMaxSize()
+                .background(color =Grey1)
+        ){
+            content()
+            CircularIndeterminateProgressBar(isDisplayed = displayProgressBar, 0.3f)
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

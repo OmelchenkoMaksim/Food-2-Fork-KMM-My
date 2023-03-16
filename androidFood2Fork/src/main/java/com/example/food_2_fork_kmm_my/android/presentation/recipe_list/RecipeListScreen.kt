@@ -10,30 +10,30 @@ import com.example.food_2_fork_kmm_my.android.presentation.theme.AppTheme
 import com.example.food_2_fork_kmm_my.presentation.recipe_list.RecipeListEvents
 import com.example.food_2_fork_kmm_my.presentation.recipe_list.RecipeListState
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
+@ExperimentalMaterialApi
+@ExperimentalComposeUiApi
 @Composable
 fun RecipeListScreen(
-    state: RecipeListState, // state going IN
-    onTriggerEvent: (RecipeListEvents) -> Unit, // events coming OUT
+    state: RecipeListState,
+    onTriggerEvent: (RecipeListEvents) -> Unit,
     onSelectRecipe: (Int) -> Unit,
-) {
-
-    AppTheme(displayProgressBar = state.isLoading) {
-//GradientDemo()
-        // это что-то вроде стратегии компоновки макета
-        Scaffold(topBar = {
-            SearchAppBar(
-                query = state.query,
-
-                onQueryChanged = {
-                    onTriggerEvent(RecipeListEvents.OnUpdateQuery(it))
-                },
-
-                // update state
-                onExecuteSearch = {
-                    onTriggerEvent(RecipeListEvents.NewSearch)
-                })
-        }) {
+){
+    AppTheme(
+        displayProgressBar = state.isLoading
+    ) {
+        Scaffold(
+            topBar = {
+                SearchAppBar(
+                    query = state.query,
+                    onQueryChanged = {
+                        onTriggerEvent(RecipeListEvents.OnUpdateQuery(it))
+                    },
+                    onExecuteSearch = {
+                        onTriggerEvent(RecipeListEvents.NewSearch)
+                    },
+                )
+            },
+        ) {
             RecipeList(
                 loading = state.isLoading,
                 recipes = state.recipes,
@@ -44,26 +44,10 @@ fun RecipeListScreen(
                 onClickRecipeListItem = onSelectRecipe
             )
         }
-
-
-        /*
-        LazyColumn {
-            items(100) { recipeId ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            onSelectRecipe(recipeId)
-                        }
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(16.dp),
-                        text = "RecipeId = ${recipeId}"
-                    )
-                }
-            }
-        }
-        */
     }
 }
+
+
+
+
+

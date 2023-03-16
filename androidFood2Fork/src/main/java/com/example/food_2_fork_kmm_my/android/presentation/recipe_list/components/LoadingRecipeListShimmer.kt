@@ -15,19 +15,17 @@ import androidx.compose.ui.unit.dp
 fun LoadingRecipeListShimmer(
     imageHeight: Dp,
     padding: Dp = 16.dp
-) {
+){
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize()
     ) {
-        val cardWidthPx = with(LocalDensity.current) { (maxWidth - (padding * 2)).toPx() }
+        val cardWidthPx = with(LocalDensity.current) { (maxWidth - (padding*2)).toPx() }
         val cardHeightPx = with(LocalDensity.current) { (imageHeight - padding).toPx() }
         val gradientWidth: Float = (0.2f * cardHeightPx)
 
-        // создание анимации шиммера
         val infiniteTransition = rememberInfiniteTransition()
         val xCardShimmer = infiniteTransition.animateFloat(
             initialValue = 0f,
-// финальная координата шиммера
             targetValue = (cardWidthPx + gradientWidth),
             animationSpec = infiniteRepeatable(
                 animation = tween(
@@ -58,7 +56,7 @@ fun LoadingRecipeListShimmer(
         )
 
         LazyColumn {
-            items(5) {
+            items(5){
                 ShimmerRecipeCardItem(
                     colors = colors,
                     xShimmer = xCardShimmer.value,
