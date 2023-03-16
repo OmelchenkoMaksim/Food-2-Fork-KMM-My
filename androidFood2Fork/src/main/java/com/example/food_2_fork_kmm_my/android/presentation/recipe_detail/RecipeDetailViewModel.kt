@@ -18,8 +18,9 @@ class RecipeDetailViewModel
 @Inject
 constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getRecipe: GetRecipe,
-): ViewModel() {
+//    private val recipeService: RecipeService
+    private val getRecipe: GetRecipe
+) : ViewModel() {
 
     val recipe: MutableState<Recipe?> = mutableStateOf(null)
 
