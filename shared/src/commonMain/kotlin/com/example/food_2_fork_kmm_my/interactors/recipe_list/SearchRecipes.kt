@@ -27,7 +27,7 @@ class SearchRecipes(
             )
 
             // delay 500ms so we can see loading
-            delay(500)
+//            delay(500)
 
             // insert into cache
             recipeCache.insert(recipes)

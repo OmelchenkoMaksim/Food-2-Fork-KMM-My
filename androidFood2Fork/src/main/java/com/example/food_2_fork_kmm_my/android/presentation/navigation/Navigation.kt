@@ -1,5 +1,6 @@
 package com.example.food_2_fork_kmm_my.android.presentation.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -13,11 +14,12 @@ import com.example.food_2_fork_kmm_my.android.presentation.recipe_detail.RecipeD
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListScreen
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @ExperimentalStdlibApi
 @Composable
-fun Navigation(){
+fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
@@ -27,7 +29,7 @@ fun Navigation(){
             RecipeListScreen(
                 state = viewModel.state.value,
                 onTriggerEvent = viewModel::onTriggerEvent,
-                onSelectRecipe = { recipeId ->
+                onClickRecipeListItem = { recipeId ->
                     navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
                 }
             )

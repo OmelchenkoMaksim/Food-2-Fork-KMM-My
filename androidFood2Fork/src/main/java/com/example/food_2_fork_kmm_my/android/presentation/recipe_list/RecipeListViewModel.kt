@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.food_2_fork_kmm_my.domain.model.Recipe
 import com.example.food_2_fork_kmm_my.interactors.recipe_list.SearchRecipes
+import com.example.food_2_fork_kmm_my.presentation.recipe_list.FoodCategory
 import com.example.food_2_fork_kmm_my.presentation.recipe_list.RecipeListEvents
 import com.example.food_2_fork_kmm_my.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,7 @@ class RecipeListViewModel
 constructor(
     private val savedStateHandle: SavedStateHandle, // don't need for this VM
     private val searchRecipes: SearchRecipes,
-): ViewModel() {
+) : ViewModel() {
 
     val state: MutableState<RecipeListState> = mutableStateOf(RecipeListState())
 
@@ -28,8 +29,8 @@ constructor(
         onTriggerEvent(RecipeListEvents.LoadRecipes)
     }
 
-    fun onTriggerEvent(event: RecipeListEvents){
-        when (event){
+    fun onTriggerEvent(event: RecipeListEvents) {
+        when (event) {
             RecipeListEvents.LoadRecipes -> {
                 loadRecipes()
             }
@@ -40,7 +41,14 @@ constructor(
                 nextPage()
             }
             is RecipeListEvents.OnUpdateQuery -> {
-                state.value = state.value.copy(query =  event.query)
+                state.value = state.value.copy(
+                    query = event.query,
+                    // так как при смене символов в запросе очевидно что категория нам не нужна
+                    selectedCategory = null
+                )
+            }
+            is RecipeListEvents.OnSelectedCategory -> {
+                onSelectCategory(event.category)
             }
             else -> {
                 handleError("Invalid Event")
@@ -48,12 +56,20 @@ constructor(
         }
     }
 
+    private fun onSelectCategory(category: FoodCategory) {
+        state.value = state.value.copy(
+            selectedCategory = category,
+            query = category.value
+        )
+        newSearch()
+    }
+
     /**
      * Perform a new search:
      * 1. page = 1
      * 2. list position needs to be reset
      */
-    private fun newSearch(){
+    private fun newSearch() {
         state.value = state.value.copy(page = 1, recipes = listOf())
         loadRecipes()
     }
@@ -61,12 +77,12 @@ constructor(
     /**
      * Get the next page of recipes
      */
-    private fun nextPage(){
+    private fun nextPage() {
         state.value = state.value.copy(page = state.value.page + 1)
         loadRecipes()
     }
 
-    private fun loadRecipes(){
+    private fun loadRecipes() {
         searchRecipes.execute(
             page = state.value.page,
             query = state.value.query,
@@ -83,13 +99,13 @@ constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun appendRecipes(recipes: List<Recipe>){
+    private fun appendRecipes(recipes: List<Recipe>) {
         val curr = ArrayList(state.value.recipes)
         curr.addAll(recipes)
         state.value = state.value.copy(recipes = curr)
     }
 
-    private fun handleError(errorMessage: String){
+    private fun handleError(errorMessage: String) {
         // TODO("Handle errors")
     }
 }
