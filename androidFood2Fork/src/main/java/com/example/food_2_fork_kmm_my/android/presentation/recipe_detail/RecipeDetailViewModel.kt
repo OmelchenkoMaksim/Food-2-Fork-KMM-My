@@ -17,29 +17,26 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.util.*
 import javax.inject.Inject
-
-@ExperimentalStdlibApi
 @HiltViewModel
 class RecipeDetailViewModel
 @Inject
 constructor(
     private val savedStateHandle: SavedStateHandle,
-//    private val recipeService: RecipeService
-    private val getRecipe: GetRecipe
-) : ViewModel() {
+    private val getRecipe: GetRecipe,
+): ViewModel() {
+
+//    private val logger = Logger("RecipeDetilViewModel")
 
     val state: MutableState<RecipeDetailState> = mutableStateOf(RecipeDetailState())
 
     init {
         savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            onTriggerEvent(
-                RecipeDetailEvents.GetRecipe(recipeId = recipeId)
-            )
+            onTriggerEvent(RecipeDetailEvents.GetRecipe(recipeId = recipeId))
         }
     }
 
-    fun onTriggerEvent(event: RecipeDetailEvents) {
-        when (event) {
+    fun onTriggerEvent(event: RecipeDetailEvents){
+        when (event){
             is RecipeDetailEvents.GetRecipe -> {
                 getRecipe(recipeId = event.recipeId)
             }
@@ -57,52 +54,38 @@ constructor(
         }
     }
 
-    private fun getRecipe(recipeId: Int) {
-        getRecipe.execute(recipeId = recipeId).onEach { dataState ->
-            println("RecipeDetailVM: loading: ${dataState.isLoading}")
-            state.value = state.value.copy(isLoading = dataState.isLoading)
-            dataState.data?.let { recipe ->
-                println("RecipeDetailVM: recipe: ${recipe}")
-                this.state.value = state.value.copy(recipe = recipe)
-            }
-
-            dataState.message?.let { message ->
-                println("RecipeDetailVM: error: ${message}")
-                appendToMessageQueue(message)
-
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder) {
-        if (!GenericMessageInfoQueueUtil()
-                .doesMessageAlreadyExistInQueue(
-                    queue = state.value.queue,
-                    messageInfo = messageInfo.build()
-                )
-        ) {
-            val queue = state.value.queue
-            queue.add(messageInfo.build())
-            state.value = state.value.copy(queue = queue)
-        }
-    }
-
     private fun removeHeadMessage() {
         try {
             val queue = state.value.queue
             queue.remove() // can throw exception if empty
             state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
             state.value = state.value.copy(queue = queue)
-        } catch (e: Exception) {
+        }catch (e: Exception){
 //            logger.log("Nothing to remove from DialogQueue")
         }
     }
+
+    private fun getRecipe(recipeId: Int){
+        getRecipe.execute(recipeId = recipeId).onEach { dataState ->
+            state.value = state.value.copy(isLoading = dataState.isLoading)
+
+            dataState.data?.let { recipe ->
+                state.value = state.value.copy(recipe = recipe)
+            }
+
+            dataState.message?.let { message ->
+                appendToMessageQueue(message)
+            }
+        }
+    }
+
+    private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder){
+        if(!GenericMessageInfoQueueUtil()
+                .doesMessageAlreadyExistInQueue(queue = state.value.queue,messageInfo = messageInfo.build())){
+            val queue = state.value.queue
+            queue.add(messageInfo.build())
+            state.value = state.value.copy(queue = queue)
+        }
+    }
 }
-
-
-
-
-
-
-
 

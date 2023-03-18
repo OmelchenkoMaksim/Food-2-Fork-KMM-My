@@ -13,17 +13,18 @@ import com.example.food_2_fork_kmm_my.android.presentation.recipe_detail.RecipeD
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_detail.RecipeDetailViewModel
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListScreen
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.RecipeListViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalStdlibApi
+@ExperimentalCoroutinesApi
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
-@ExperimentalStdlibApi
 @Composable
-fun Navigation() {
+fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
-            // in the future, the hilt-navigation-compose artifact will simplify this
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
             RecipeListScreen(
