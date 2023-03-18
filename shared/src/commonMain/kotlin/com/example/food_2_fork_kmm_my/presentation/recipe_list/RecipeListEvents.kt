@@ -13,4 +13,6 @@ sealed class RecipeListEvents {
 
     data class OnSelectedCategory(val category: FoodCategory) : RecipeListEvents()
 
+    object OnRemoveHeadMessageFromQueue: RecipeListEvents()
+
 }

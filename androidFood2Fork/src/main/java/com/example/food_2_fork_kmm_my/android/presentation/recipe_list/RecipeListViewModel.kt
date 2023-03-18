@@ -5,7 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.food_2_fork_kmm_my.domain.model.GenericMessageInfo
 import com.example.food_2_fork_kmm_my.domain.model.Recipe
+import com.example.food_2_fork_kmm_my.domain.model.UIComponentType
+import com.example.food_2_fork_kmm_my.domain.util.GenericMessageInfoQueueUtil
+import com.example.food_2_fork_kmm_my.domain.util.Queue
 import com.example.food_2_fork_kmm_my.interactors.recipe_list.SearchRecipes
 import com.example.food_2_fork_kmm_my.presentation.recipe_list.FoodCategory
 import com.example.food_2_fork_kmm_my.presentation.recipe_list.RecipeListEvents
@@ -13,6 +17,7 @@ import com.example.food_2_fork_kmm_my.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,9 +55,29 @@ constructor(
             is RecipeListEvents.OnSelectedCategory -> {
                 onSelectCategory(event.category)
             }
-            else -> {
-                handleError("Invalid Event")
+            is RecipeListEvents.OnRemoveHeadMessageFromQueue -> {
+                removeHeadMessage()
             }
+            else -> {
+                appendToMessageQueue(
+                    GenericMessageInfo.Builder()
+                        .id(UUID.randomUUID().toString())
+                        .title("Error")
+                        .uiComponentType(UIComponentType.Dialog)
+                        .description("Invalid Event")
+                )
+            }
+        }
+    }
+
+    private fun removeHeadMessage() {
+        try {
+            val queue = state.value.queue
+            queue.remove()
+            state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
+            state.value = state.value.copy(queue = queue)
+        } catch (e: Exception) {
+
         }
     }
 
@@ -94,7 +119,7 @@ constructor(
             }
 
             dataState.message?.let { message ->
-                handleError(message)
+                appendToMessageQueue(message)
             }
         }.launchIn(viewModelScope)
     }
@@ -105,8 +130,17 @@ constructor(
         state.value = state.value.copy(recipes = curr)
     }
 
-    private fun handleError(errorMessage: String) {
-        // TODO("Handle errors")
+    private fun appendToMessageQueue(messageInfo: GenericMessageInfo.Builder) {
+        if (!GenericMessageInfoQueueUtil()
+                .doesMessageAlreadyExistInQueue(
+                    queue = state.value.queue,
+                    messageInfo = messageInfo.build()
+                )
+        ) {
+            val queue = state.value.queue
+            queue.add(messageInfo.build())
+            state.value = state.value.copy(queue = queue)
+        }
     }
 }
 

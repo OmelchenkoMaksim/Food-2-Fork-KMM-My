@@ -1,29 +1,48 @@
 package com.example.food_2_fork_kmm_my.android.presentation.recipe_detail
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.food_2_fork_kmm_my.android.presentation.components.RECIPE_IMAGE_HEIGHT
+import com.example.food_2_fork_kmm_my.android.presentation.recipe_detail.components.LoadingRecipeShimmer
 import com.example.food_2_fork_kmm_my.android.presentation.recipe_detail.components.RecipeView
-import com.example.food_2_fork_kmm_my.android.presentation.recipe_list.components.RecipeCard
 import com.example.food_2_fork_kmm_my.android.presentation.theme.AppTheme
-import com.example.food_2_fork_kmm_my.domain.model.Recipe
+import com.example.food_2_fork_kmm_my.presentation.recipe_detail.RecipeDetailEvents
+import com.example.food_2_fork_kmm_my.presentation.recipe_detail.RecipeDetailState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalStdlibApi::class)
+
+@ExperimentalStdlibApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
+@ExperimentalCoroutinesApi
 @Composable
 fun RecipeDetailScreen(
-    recipe: Recipe?,
-){
+    state: RecipeDetailState,
+    onTriggerEvent: (RecipeDetailEvents) -> Unit,
+) {
     AppTheme(
-        displayProgressBar = false
-    ) {
-        if(recipe == null){
-            Text("Unable to get the details of this recipe...")
+        displayProgressBar = state.isLoading,
+        dialogQueue = state.queue,
+        onRemoveHeadMessageFromQueue = {
+            onTriggerEvent(RecipeDetailEvents.OnRemoveHeadMessageFromQueue)
         }
-        else{
-            RecipeView(recipe = recipe)
+    ) {
+        if (state.recipe == null && state.isLoading) {
+            LoadingRecipeShimmer(imageHeight = RECIPE_IMAGE_HEIGHT.dp)
+        } else if (state.recipe == null) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "We were unable to retrieve the details for this recipe.\nTry resetting the app.",
+                style = MaterialTheme.typography.body1
+            )
+        } else {
+            RecipeView(recipe = state.recipe!!)
         }
     }
 }
