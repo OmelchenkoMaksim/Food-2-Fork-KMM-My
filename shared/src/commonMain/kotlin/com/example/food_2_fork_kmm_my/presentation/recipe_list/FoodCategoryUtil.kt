@@ -1,4 +1,4 @@
-    package com.example.food_2_fork_kmm_my.presentation.recipe_list
+package com.example.food_2_fork_kmm_my.presentation.recipe_list
 
 class FoodCategoryUtil {
     fun getAllFoodCategories(): List<FoodCategory> {

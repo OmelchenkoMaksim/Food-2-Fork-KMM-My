@@ -30,8 +30,8 @@ fun SearchAppBar(
     onQueryChanged: (String) -> Unit,
     onExecuteSearch: () -> Unit,
     categories: List<FoodCategory>,
+    selectedCategory: FoodCategory?,
     onSelectedCategoryChanged: (FoodCategory) -> Unit,
-    selectedCategore: FoodCategory? = null
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Surface(
@@ -74,7 +74,7 @@ fun SearchAppBar(
                 items(categories) {
                     FoodCategoryChip(
                         category = it.value,
-                        isSelected = selectedCategore == it,
+                        isSelected = selectedCategory == it,
                         onSelectedCategoryChanged = {
                             FoodCategoryUtil().getFoodCategory(it)?.let { newCategory ->
                                 onSelectedCategoryChanged(newCategory)

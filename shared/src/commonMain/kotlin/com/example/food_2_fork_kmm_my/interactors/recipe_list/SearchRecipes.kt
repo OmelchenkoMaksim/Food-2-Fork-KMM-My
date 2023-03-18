@@ -13,25 +13,27 @@ class SearchRecipes(
     private val recipeService: RecipeService,
     private val recipeCache: RecipeCache,
 ) {
-    //    private val logger = Logger("SearchRecipes")
+//    private val logger = Logger("SearchRecipes")
+
     fun execute(
         page: Int,
         query: String,
     ): Flow<DataState<List<Recipe>>> = flow {
-        emit(DataState.loading())
-
-        // emit recipes
         try {
+            emit(DataState.loading())
+
+            // just to show pagination, api is fast
+//            delay(500)
+
+            // force error for testing
+            if (query == "error") {
+                throw Exception("Forcing an error... Search FAILED!")
+            }
+
             val recipes = recipeService.search(
                 page = page,
-                query = query
+                query = query,
             )
-
-            // delay 500ms so we can see loading
-//            delay(500)
-            if (query == "error") {
-                throw Exception("Error in search")
-            }
             // insert into cache
             recipeCache.insert(recipes)
 
@@ -53,12 +55,10 @@ class SearchRecipes(
                         .id("SearchRecipes.Error")
                         .title("Error")
                         .uiComponentType(UIComponentType.Dialog)
-                        .description(e.message ?: "Unknown error")
-                ))
+                        .description(e.message ?: "Unknown Error")
+                )
+            )
         }
-        /* {
-            // how can we emit an error?
-            emit(DataState.error<List<Recipe>>(message = e.message ?: "Unkown Error"))
-        }*/
     }
+
 }

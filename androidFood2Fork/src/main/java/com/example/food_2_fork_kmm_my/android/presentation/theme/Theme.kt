@@ -45,22 +45,24 @@ fun AppTheme(
         colors = LightThemeColors,
         typography = QuickSandTypography,
         shapes = AppShapes
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color =Grey1)
-        ){
+                .background(color = Grey1)
+        ) {
             // For android we can process the DialogQueue at the Application level
             // on iOS you cannot do this because SwiftUI preloads the views in a List
             ProcessDialogQueue(
                 dialogQueue = dialogQueue,
                 onRemoveHeadMessageFromQueue = onRemoveHeadMessageFromQueue,
             )
-            Column{
+            Column {
                 content()
             }
             CircularIndeterminateProgressBar(isDisplayed = displayProgressBar, 0.3f)
         }
     }
 }
+
+

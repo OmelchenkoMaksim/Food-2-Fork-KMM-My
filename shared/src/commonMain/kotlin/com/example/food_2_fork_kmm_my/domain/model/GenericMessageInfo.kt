@@ -12,7 +12,7 @@ data class NegativeAction(
 )
 
 class GenericMessageInfo
-private constructor(builder: GenericMessageInfo.Builder) {
+private constructor(builder: Builder) {
 
     // required
     val id: String

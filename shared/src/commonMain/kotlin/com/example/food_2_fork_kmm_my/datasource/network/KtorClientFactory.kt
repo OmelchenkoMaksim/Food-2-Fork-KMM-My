@@ -6,12 +6,12 @@ import com.example.food_2_fork_kmm_my.domain.util.DatetimeUtil
 import io.ktor.client.*
 
 expect class KtorClientFactory() {
- 
-    fun build():HttpClient
+
+    fun build(): HttpClient
 }
 
 
-fun RecipeDto.toRecipe(): Recipe{
+fun RecipeDto.toRecipe(): Recipe {
     val datetimeUtil = DatetimeUtil()
     return Recipe(
         id = pk,
@@ -26,6 +26,6 @@ fun RecipeDto.toRecipe(): Recipe{
     )
 }
 
-fun List<RecipeDto>.toRecipeList(): List<Recipe>{
-    return map{it.toRecipe()}
+fun List<RecipeDto>.toRecipeList(): List<Recipe> {
+    return map { it.toRecipe() }
 }

@@ -28,7 +28,7 @@ fun RecipeListScreen(
         displayProgressBar = state.isLoading,
         dialogQueue = state.queue,
         onRemoveHeadMessageFromQueue = {
-                                       onTriggerEvent(RecipeListEvents.OnRemoveHeadMessageFromQueue)
+            onTriggerEvent(RecipeListEvents.OnRemoveHeadMessageFromQueue)
         },
     ) {
         val foodCategories = remember { FoodCategoryUtil().getAllFoodCategories() }
@@ -44,9 +44,9 @@ fun RecipeListScreen(
                     },
                     categories = foodCategories,
                     onSelectedCategoryChanged = {
-                        onTriggerEvent(RecipeListEvents.OnSelectedCategory(it))
+                        onTriggerEvent(RecipeListEvents.OnSelectCategory(it))
                     },
-                    selectedCategore = state.selectedCategory
+                    selectedCategory = state.selectedCategory
                 )
             },
         ) {

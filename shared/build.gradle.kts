@@ -52,7 +52,7 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
-            dependencies{
+            dependencies {
                 implementation(Kotlinx.datetime)
                 implementation(Ktor.core)
                 implementation(Ktor.clientSerialization)
@@ -60,12 +60,12 @@ kotlin {
             }
         }
         val androidMain by getting {
-            dependencies{
+            dependencies {
                 implementation(Ktor.android)
                 implementation(SQLDelight.androidDriver)
             }
         }
-        val iosMain by getting{
+        val iosMain by getting {
             dependencies {
                 implementation(Ktor.ios)
                 implementation(SQLDelight.nativeDriver)

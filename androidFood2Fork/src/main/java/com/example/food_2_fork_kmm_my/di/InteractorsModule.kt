@@ -19,7 +19,7 @@ object InteractorsModule {
     fun provideSearchRecipes(
         recipeService: RecipeService,
         recipeCache: RecipeCache,
-    ): SearchRecipes{
+    ): SearchRecipes {
         return SearchRecipes(
             recipeService = recipeService,
             recipeCache = recipeCache

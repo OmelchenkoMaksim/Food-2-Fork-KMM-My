@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import com.example.food_2_fork_kmm_my.domain.model.NegativeAction
 import com.example.food_2_fork_kmm_my.domain.model.PositiveAction
 
-
 @Composable
 fun GenericDialog(
     modifier: Modifier = Modifier,

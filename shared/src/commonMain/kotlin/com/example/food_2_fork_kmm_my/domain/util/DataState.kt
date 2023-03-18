@@ -5,7 +5,7 @@ import com.example.food_2_fork_kmm_my.domain.model.GenericMessageInfo
 data class DataState<T>(
     val message: GenericMessageInfo.Builder? = null,
     val data: T? = null,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
 ) {
 
     companion object {
@@ -29,6 +29,6 @@ data class DataState<T>(
             )
         }
 
-        fun <T>loading() = DataState<T>(isLoading = true)
+        fun <T> loading() = DataState<T>(isLoading = true)
     }
 }

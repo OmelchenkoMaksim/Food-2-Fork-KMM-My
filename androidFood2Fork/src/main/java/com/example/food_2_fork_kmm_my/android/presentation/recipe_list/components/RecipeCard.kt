@@ -28,7 +28,7 @@ fun RecipeCard(
             .clickable(onClick = onClick),
         elevation = 8.dp,
     ) {
-        Column() {
+        Column {
             RecipeImage(
                 url = recipe.featuredImage,
                 contentDescription = recipe.title

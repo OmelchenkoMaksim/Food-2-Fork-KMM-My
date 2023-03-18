@@ -58,7 +58,7 @@ fun RecipeView(
                         style = MaterialTheme.typography.h5
                     )
                 }
-                    // инфо о том когда были последние обновления в карточке рецепта
+                // инфо о том когда были последние обновления в карточке рецепта
                 val datetimeUtil = remember { DatetimeUtil() }
                 Text(
                     text = "Updated ${datetimeUtil.humanizeDatetime(recipe.dateUpdated)} by ${recipe.publisher}",

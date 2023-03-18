@@ -52,7 +52,7 @@ constructor(
                     selectedCategory = null
                 )
             }
-            is RecipeListEvents.OnSelectedCategory -> {
+            is RecipeListEvents.OnSelectCategory -> {
                 onSelectCategory(event.category)
             }
             is RecipeListEvents.OnRemoveHeadMessageFromQueue -> {

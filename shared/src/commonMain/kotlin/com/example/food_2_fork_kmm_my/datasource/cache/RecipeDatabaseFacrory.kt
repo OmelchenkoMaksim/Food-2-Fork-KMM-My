@@ -7,7 +7,7 @@ import com.squareup.sqldelight.db.SqlDriver
 
 class RecipeDatabaseFactory(
     private val driverFactory: DriverFactory
-){
+) {
     fun createDatabase(): RecipeDatabase {
         return RecipeDatabase(driverFactory.createDriver())
     }
@@ -32,8 +32,8 @@ fun Recipe_Entity.toRecipe(): Recipe {
     )
 }
 
-fun List<Recipe_Entity>.toRecipeList(): List<Recipe>{
-    return map{it.toRecipe()}
+fun List<Recipe_Entity>.toRecipeList(): List<Recipe> {
+    return map { it.toRecipe() }
 }
 
 /**
@@ -41,15 +41,15 @@ fun List<Recipe_Entity>.toRecipeList(): List<Recipe>{
  */
 fun List<String>.convertIngredientListToString(): String {
     val ingredientsString = StringBuilder()
-    for(ingredient in this){
+    for (ingredient in this) {
         ingredientsString.append("$ingredient,")
     }
     return ingredientsString.toString()
 }
 
-fun String.convertIngredientsToList(): List<String>{
+fun String.convertIngredientsToList(): List<String> {
     val list: ArrayList<String> = ArrayList()
-    for(ingredient in split(",")){
+    for (ingredient in split(",")) {
         list.add(ingredient)
     }
     return list

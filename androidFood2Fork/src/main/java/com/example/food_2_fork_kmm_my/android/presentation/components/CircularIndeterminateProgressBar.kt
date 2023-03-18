@@ -1,4 +1,3 @@
-
 package com.example.food_2_fork_kmm_my.android.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxSize
