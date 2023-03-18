@@ -25,24 +25,27 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 fun RecipeDetailScreen(
     state: RecipeDetailState,
     onTriggerEvent: (RecipeDetailEvents) -> Unit,
-) {
+){
     AppTheme(
         displayProgressBar = state.isLoading,
         dialogQueue = state.queue,
         onRemoveHeadMessageFromQueue = {
             onTriggerEvent(RecipeDetailEvents.OnRemoveHeadMessageFromQueue)
         }
-    ) {
-        if (state.recipe == null && state.isLoading) {
+    ){
+        if(state.recipe == null && state.isLoading){
             LoadingRecipeShimmer(imageHeight = RECIPE_IMAGE_HEIGHT.dp)
-        } else if (state.recipe == null) {
+        }
+        else if(state.recipe == null){
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "We were unable to retrieve the details for this recipe.\nTry resetting the app.",
                 style = MaterialTheme.typography.body1
             )
-        } else {
+        }
+        else{
             RecipeView(recipe = state.recipe!!)
         }
     }
 }
+

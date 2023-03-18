@@ -41,7 +41,7 @@ fun GenericDialog(
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
-                if (negativeAction != null) {
+                if(negativeAction != null){
                     Button(
                         modifier = Modifier.padding(end = 8.dp),
                         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onError),
@@ -53,7 +53,7 @@ fun GenericDialog(
                         Text(text = negativeAction.negativeBtnTxt)
                     }
                 }
-                if (positiveAction != null) {
+                if(positiveAction != null){
                     Button(
                         modifier = Modifier.padding(end = 8.dp),
                         onClick = {

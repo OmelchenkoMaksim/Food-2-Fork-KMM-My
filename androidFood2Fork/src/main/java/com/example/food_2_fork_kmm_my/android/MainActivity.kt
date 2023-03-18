@@ -3,6 +3,7 @@ package com.example.food_2_fork_kmm_my.android
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.example.food_2_fork_kmm_my.android.presentation.navigation.Navigation
@@ -10,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @OptIn(ExperimentalFoundationApi::class)
     @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     @ExperimentalStdlibApi

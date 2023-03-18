@@ -28,10 +28,10 @@ fun RecipeListScreen(
         displayProgressBar = state.isLoading,
         dialogQueue = state.queue,
         onRemoveHeadMessageFromQueue = {
-                                       onTriggerEvent(RecipeListEvents.OnRemoveHeadMessageFromQueue)
-        },
+            onTriggerEvent(RecipeListEvents.OnRemoveHeadMessageFromQueue)
+        }
     ) {
-        val foodCategories = remember { FoodCategoryUtil().getAllFoodCategories() }
+        val foodCategories = remember{FoodCategoryUtil().getAllFoodCategories()}
         Scaffold(
             topBar = {
                 SearchAppBar(
@@ -43,10 +43,10 @@ fun RecipeListScreen(
                         onTriggerEvent(RecipeListEvents.NewSearch)
                     },
                     categories = foodCategories,
+                    selectedCategory = state.selectedCategory,
                     onSelectedCategoryChanged = {
-                        onTriggerEvent(RecipeListEvents.OnSelectedCategory(it))
+                        onTriggerEvent(RecipeListEvents.OnSelectCategory(it))
                     },
-                    selectedCategore = state.selectedCategory
                 )
             },
         ) {

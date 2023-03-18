@@ -4,11 +4,22 @@ import com.example.food_2_fork_kmm_my.domain.model.GenericMessageInfo
 import com.example.food_2_fork_kmm_my.domain.model.Recipe
 import com.example.food_2_fork_kmm_my.domain.util.Queue
 
-data class RecipeListState(
+ data class RecipeListState(
     val isLoading: Boolean = false,
     val page: Int = 1,
     val query: String = "",
-    val selectedCategory: FoodCategory? = null,
     val recipes: List<Recipe> = listOf(),
-    val queue: Queue<GenericMessageInfo> = Queue(mutableListOf()),
-)
+    val selectedCategory: FoodCategory? = null,
+    val queue: Queue<GenericMessageInfo> = Queue(mutableListOf()), // messages to be displayed in ui
+)  {
+    // Need secondary constructor to initialize with no args in SwiftUI
+    constructor(): this(
+        isLoading = false,
+        page = 1,
+        query = "",
+        recipes = listOf(),
+        selectedCategory = null,
+        queue = Queue(mutableListOf()),
+    )
+
+}

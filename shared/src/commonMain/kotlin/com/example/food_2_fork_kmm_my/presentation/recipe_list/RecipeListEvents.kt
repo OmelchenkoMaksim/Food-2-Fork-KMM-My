@@ -1,18 +1,16 @@
 package com.example.food_2_fork_kmm_my.presentation.recipe_list
 
-// TODO("We will be adding more events to this UI as the course progresses")
-sealed class RecipeListEvents {
+sealed class RecipeListEvents{
 
-    object LoadRecipes : RecipeListEvents()
+    object LoadRecipes: RecipeListEvents()
 
-    object NewSearch : RecipeListEvents()
+    object NewSearch: RecipeListEvents()
 
-    object NextPage : RecipeListEvents()
+    object NextPage: RecipeListEvents()
 
-    data class OnUpdateQuery(val query: String) : RecipeListEvents()
+    data class OnUpdateQuery(val query: String): RecipeListEvents()
 
-    data class OnSelectedCategory(val category: FoodCategory) : RecipeListEvents()
+    data class OnSelectCategory(val category: FoodCategory): RecipeListEvents()
 
     object OnRemoveHeadMessageFromQueue: RecipeListEvents()
-
 }
